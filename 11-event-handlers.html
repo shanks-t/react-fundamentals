@@ -9,23 +9,28 @@
     const state = {eventCount: 0, username: ''}
 
     function App() {
-      function handleClick() {
-        setState({eventCount: state.eventCount + 1})
+      function handleClick(event) {
+        if (event.charCode === 13) {
+          setState({eventCount: state.eventCount + 1})
+        }
       }
 
       function handleChange(event) {
-        setState({username: event.target.value})
+        console.log(event.nativeEvent)
+        if (event.charCode === 13) {
+          setState({username: event.target.value})
+        }
       }
 
       return (
         <div>
-          <p>There have been {state.eventCount} events.</p>
+          <p>There have been {state.eventCount} entries.</p>
           <p>
             <button onClick={handleClick}>Click Me</button>
           </p>
           <p>You typed: {state.username}</p>
           <p>
-            <input onChange={handleChange} />
+            <input onKeyPress={(event) => {handleChange(event); handleClick(event)}} />
           </p>
         </div>
       )
